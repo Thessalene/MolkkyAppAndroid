@@ -1,0 +1,76 @@
+@startuml
+
+skinparam object {
+    BackgroundColor Snow
+    BorderColor Purple
+    ArrowColor Purple
+
+}
+
+object Matchs{
+    <u>idMatchs</u> : int auto_increment
+    numTerrain : int default not null
+    idPhase* : int default not null
+}
+
+object Manche{
+    <u>idManche</u> : int auto_increment
+    idMatch* : int default not null
+}
+
+object Phase{
+    <u>idPhase</u> : int auto_increment
+    label : String default not null
+    manchesParMatch : int default not null
+    nbVictoire : int default not null
+    valeurVictoire : int default not null
+    idTournoi* : int default not null
+    typePhase : ENUM default not null
+}
+
+object Participe{
+    jeuBlanc : boolean default false
+    points : int default null
+    <u>idManche*</u> : int default null
+    <u>idEquipe*</u> : int 
+}
+
+object Equipe{
+    <u>idEquipe</u> : int auto_increment
+    nbJoueurs : int
+    nomUtilisateur String
+    nomEquipe : String
+    numEquipe : int
+    idClub* : int
+}
+
+object Club{
+    <u>idClub</u> : int auto_increment
+    nomClub : String default null
+    villeClub : String default null
+}
+
+object Tournoi{
+    <u>idTournoi</u> : int auto_increment
+    dateDeb : date default null
+    nbPoules : int default null
+    nbEquipesParPoule : int default null
+    consolante : boolean default true
+    nbEquipeMax : int
+    estOuvert : boolean default false
+    nomTournoi : String
+    nbJours : int default 1
+    type : ENUM default not null
+
+}
+    
+Tournoi <-up- Phase
+Matchs -right-> Phase
+Matchs <-left- Manche
+Participe -down-> Manche
+Participe -up-> Equipe
+Club <-left- Equipe
+
+
+@enduml
+

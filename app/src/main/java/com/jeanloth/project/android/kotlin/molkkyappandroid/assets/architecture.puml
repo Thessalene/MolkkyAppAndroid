@@ -1,0 +1,115 @@
+@startuml
+
+title Architecture
+skinparam object {
+          BackgroundColor Snow
+          BorderColor Green
+          ArrowColor Green
+}
+
+'APP (Android Part)
+package "AppModule" {
+  node "Application"
+  node "Di"
+  node "Views"
+  node "Extensions"
+}
+
+package "Presentation" {
+  node ViewModels
+}
+
+'COMMON
+package "Common" {
+  node Authentification
+  node Configuration
+  node Logging
+  node Flaggr
+}
+
+'DATAS
+package "Data" {
+  node contracts {
+    () TeamDataSourceContract
+  }
+  node repositories{
+    () TeamRepo
+  }
+}
+
+TeamRepo .up.> TeamDataSourceContract #Red
+
+'DOMAIN USE CASES
+package "Domain - UC" {
+  node contractsDomain {
+      () TeamContract
+    }
+
+  node UseCases {
+    () getTeamsUseCase
+  }
+}
+
+getTeamsUseCase .up.> TeamContract #Red
+
+'DOMAIN MODEL
+package "Domain-Models" {
+  () Team
+  () Tournament
+  () Club
+  () Manche
+  () Phase
+}
+
+'LOCAL MODULE
+package "LocalModule" {
+  node repositoriesLocal {
+    () TeamLocalDataSourceRepo
+  }
+
+  node contractsLocal {
+    () TeamLocalDataSourceContract
+  }
+}
+
+TeamLocalDataSourceRepo ..> TeamLocalDataSourceContract #Red
+
+'EXTERNAL MODULE
+package "ExternalModule" {
+  node apis {
+    () TeamService
+  }
+  node mappers
+  node repositoriesExternal {
+      () TeamExternalDataSourceRepo
+    }
+
+    node contractsExternal {
+      () TeamExternalDataSourceContract
+    }
+}
+TeamExternalDataSourceRepo ..> TeamExternalDataSourceContract #Red
+contractsExternal -[hidden]-> apis
+contractsExternal -[hidden]-> mappers
+
+'EXTERNAL DATA SOURCE
+rectangle API
+
+database "MySql" {
+  rectangle TeamDB
+  rectangle TournamentDB
+}
+
+'RELATIONS
+Views -right--> ViewModels
+ViewModels --> getTeamsUseCase
+getTeamsUseCase -right-> TeamRepo
+TeamRepo -down-> TeamLocalDataSourceRepo
+TeamRepo -down-> TeamExternalDataSourceRepo
+TeamExternalDataSourceRepo --> TeamService
+TeamService --> API
+API --> TeamDB
+
+Views ..> Team #blue
+Views ..> Club #blue
+@enduml

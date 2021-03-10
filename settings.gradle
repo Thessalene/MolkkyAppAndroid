@@ -1,2 +1,5 @@
 include ':app'
+include ':Data'
+include ':Domain'
+include ':Domain-models'
 rootProject.name = "MolkkyAppAndroid"

@@ -6,18 +6,7 @@ skinparam object {
           BorderColor Green
           ArrowColor Green
 }
-
-'APP (Android Part)
-package "AppModule" {
-  node "Application"
-  node "Di"
-  node "Views"
-  node "Extensions"
-}
-
-package "Presentation" {
-  node ViewModels
-}
+skinparam defaultTextAlignment center
 
 'COMMON
 package "Common" {
@@ -27,30 +16,15 @@ package "Common" {
   node Flaggr
 }
 
-'DATAS
-package "Data" {
-  node contracts {
-    () TeamDataSourceContract
-  }
-  node repositories{
-    () TeamRepo
-  }
+
+'PRESENTATION (Android Part)
+package "Presentation" {
+  node "Application"
+  node "Di"
+  node "Views"
+  node "Extensions"
+   node ViewModels
 }
-
-TeamRepo .up.> TeamDataSourceContract #Red
-
-'DOMAIN USE CASES
-package "Domain - UC" {
-  node contractsDomain {
-      () TeamContract
-    }
-
-  node UseCases {
-    () getTeamsUseCase
-  }
-}
-
-getTeamsUseCase .up.> TeamContract #Red
 
 'DOMAIN MODEL
 package "Domain-Models" {
@@ -61,25 +35,28 @@ package "Domain-Models" {
   () Phase
 }
 
+'DATAS
+package "Data" {
 'LOCAL MODULE
-package "LocalModule" {
+rectangle "LocalModule" {
   node repositoriesLocal {
     () TeamLocalDataSourceRepo
   }
 
+    node localMapper
   node contractsLocal {
     () TeamLocalDataSourceContract
   }
 }
 
-TeamLocalDataSourceRepo ..> TeamLocalDataSourceContract #Red
+TeamLocalDataSourceRepo .up.> TeamLocalDataSourceContract #Red
 
 'EXTERNAL MODULE
-package "ExternalModule" {
+rectangle "ExternalModule" {
   node apis {
     () TeamService
   }
-  node mappers
+  node externalMapper
   node repositoriesExternal {
       () TeamExternalDataSourceRepo
     }
@@ -88,9 +65,30 @@ package "ExternalModule" {
       () TeamExternalDataSourceContract
     }
 }
-TeamExternalDataSourceRepo ..> TeamExternalDataSourceContract #Red
-contractsExternal -[hidden]-> apis
-contractsExternal -[hidden]-> mappers
+TeamExternalDataSourceRepo .up.> TeamExternalDataSourceContract #Red
+
+}
+
+'DOMAIN USE CASES
+package "Domain" {
+    node contracts {
+        () TeamDataSourceContract
+    }
+    node repositories{
+        () TeamRepo
+    }
+
+  node contractsDomain {
+      () TeamContract
+    }
+
+  node UseCases {
+    () getTeamsUseCase
+  }
+}
+TeamRepo .up.> TeamDataSourceContract #Red
+getTeamsUseCase .up.> TeamContract #Red
+
 
 'EXTERNAL DATA SOURCE
 rectangle API
@@ -101,15 +99,36 @@ database "MySql" {
 }
 
 'RELATIONS
-Views -right--> ViewModels
-ViewModels --> getTeamsUseCase
+Views -down--> ViewModels
+ViewModels .down.> Team #blue
+ViewModels -right-> getTeamsUseCase
 getTeamsUseCase -right-> TeamRepo
-TeamRepo -down-> TeamLocalDataSourceRepo
-TeamRepo -down-> TeamExternalDataSourceRepo
+
+TeamRepo --> localMapper
+localMapper-down-> TeamLocalDataSourceRepo
+
+TeamRepo --> externalMapper
+externalMapper --> TeamExternalDataSourceRepo
 TeamExternalDataSourceRepo --> TeamService
-TeamService --> API
+TeamService -down-> API
 API --> TeamDB
+
+
+'Come back
+TeamLocalDataSourceRepo --> localMapper #purple
+localMapper --> TeamRepo #purple
+TeamExternalDataSourceRepo --> externalMapper #purple
+externalMapper --> TeamRepo #purple
+TeamService --> TeamExternalDataSourceRepo #purple
+
+TeamRepo -left-> getTeamsUseCase #purple
+
 
 Views ..> Team #blue
 Views ..> Club #blue
+
+'Hidden relations
+TeamExternalDataSourceRepo -[hidden]down- TeamService
+UseCases -[hidden]- externalMapper
+
 @enduml

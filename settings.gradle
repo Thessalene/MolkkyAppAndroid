@@ -1,3 +1,4 @@
+include ':Documentation'
 include ':app'
 include ':Data'
 include ':Domain'

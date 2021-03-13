@@ -10,6 +10,8 @@ class MolkkyApplication : Application() {
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
 
+        // Retrofit configuration
+
         startKoin {
             modules(
                 listOf(

@@ -1,4 +1,4 @@
-package com.jeanloth.project.android.kotlin.molkkyappandroid
+package com.jeanloth.project.android.kotlin.molkkyappandroid.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
@@ -9,6 +9,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.jeanloth.project.android.kotlin.molkkyappandroid.R
+import kotlinx.android.synthetic.main.activity_fullscreen.*
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -70,15 +72,14 @@ class FullscreenActivity : AppCompatActivity() {
         isFullscreen = true
 
         // Set up the user interaction to manually show or hide the system UI.
-        fullscreenContent = findViewById(R.id.fullscreen_content)
-        fullscreenContent.setOnClickListener { toggle() }
+        bt_connexion.setOnClickListener { toggle() }
 
         fullscreenContentControls = findViewById(R.id.fullscreen_content_controls)
 
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById<Button>(R.id.dummy_button).setOnTouchListener(delayHideTouchListener)
+        findViewById<Button>(R.id.bt_connexion).setOnTouchListener(delayHideTouchListener)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

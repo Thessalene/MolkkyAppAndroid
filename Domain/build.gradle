@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'kotlin'
+    id 'kotlin-kapt'
 }
 
 java {
@@ -10,7 +11,12 @@ java {
 
 dependencies {
     implementation project(':Domain-models')
-    implementation project(':Common')
+    implementation project(':Data')
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    // Networking
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
 }

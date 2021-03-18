@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="?attr/fullscreenBackgroundColor"
+    android:background="?attr/colorPrimary"
     android:theme="@style/ThemeOverlay.MolkkyAppAndroid.FullscreenContainer"
     tools:context=".views.FullscreenActivity">
 
@@ -16,6 +15,7 @@
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
     <FrameLayout
+        android:id="@+id/frame_layout_homeActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
@@ -35,7 +35,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="18sp"
                 android:textColor="@color/amber_50"
+                android:textAllCaps="false"
                 android:text="@string/btn_connexion" />
 
         </LinearLayout>
@@ -46,23 +48,32 @@
             android:gravity="center"
             android:layout_gravity="center">
 
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="190dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="75dp"
+                android:src="@drawable/logo_molkky" />
+
             <TextView
                 android:id="@+id/tv_connexion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
+                android:layout_below="@+id/logo"
                 android:textColor="@color/amber_50"
-                tools:text="Veuillez saisir votre identifiant de connexion" />
-
-
+                android:text="Veuillez saisir votre identifiant de connexion" />
+            
             <EditText
-                android:id="@+id/edt_identifiant"
+                android:id="@+id/edt_identifier"
                 android:layout_width="180dp"
                 android:layout_centerHorizontal="true"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:layout_below="@+id/tv_connexion"
                 android:hint="Code de connexion"
+                android:maxLines="1"
                 android:textColor="@color/amber_50"
                 />
 
@@ -70,7 +81,7 @@
                 android:id="@+id/tv_error_msg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/edt_identifiant"
+                android:layout_below="@+id/edt_identifier"
                 android:textAlignment="center"
                 android:textColor="@color/amber_50"
                 android:visibility="invisible"

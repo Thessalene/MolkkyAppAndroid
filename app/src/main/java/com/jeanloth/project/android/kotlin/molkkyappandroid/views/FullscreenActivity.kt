@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.jeanloth.project.android.kotlin.molkkyappandroid.R
+import com.jeanloth.project.android.kotlin.molkkyappandroid.fragments.LoginFragment
 import kotlinx.android.synthetic.main.activity_fullscreen.*
 
 /**
@@ -17,7 +20,6 @@ import kotlinx.android.synthetic.main.activity_fullscreen.*
  * status bar and navigation/system bar) with user interaction.
  */
 class FullscreenActivity : AppCompatActivity() {
-    private lateinit var fullscreenContent: TextView
     private lateinit var fullscreenContentControls: LinearLayout
     private val hideHandler = Handler()
 
@@ -28,7 +30,7 @@ class FullscreenActivity : AppCompatActivity() {
         // Note that some of these constants are new as of API 16 (Jelly Bean)
         // and API 19 (KitKat). It is safe to use them, as they are inlined
         // at compile-time and do nothing on earlier devices.
-        fullscreenContent.systemUiVisibility =
+        bt_connexion.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LOW_PROFILE or
                         View.SYSTEM_UI_FLAG_FULLSCREEN or
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
@@ -67,19 +69,45 @@ class FullscreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_fullscreen)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
         isFullscreen = true
 
         // Set up the user interaction to manually show or hide the system UI.
-        bt_connexion.setOnClickListener { toggle() }
+        bt_connexion.setOnClickListener {
+            //Navigate to loginFragment
+        }
+
+        edt_identifier.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if(s.isNullOrEmpty()){
+                    hide()
+                } else {
+                    show()
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
 
         fullscreenContentControls = findViewById(R.id.fullscreen_content_controls)
 
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById<Button>(R.id.bt_connexion).setOnTouchListener(delayHideTouchListener)
+        bt_connexion.setOnTouchListener(delayHideTouchListener)
+
+        if (savedInstanceState == null) {
+            val fragment = LoginFragment()
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.frame_layout_homeActivity, fragment)
+                .commit()
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -112,7 +140,7 @@ class FullscreenActivity : AppCompatActivity() {
 
     private fun show() {
         // Show the system bar
-        fullscreenContent.systemUiVisibility =
+        bt_connexion.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                         View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         isFullscreen = true

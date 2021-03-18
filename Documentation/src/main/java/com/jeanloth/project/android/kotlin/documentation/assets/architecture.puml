@@ -65,7 +65,7 @@ rectangle "ExternalModule" {
       () TeamExternalDataSourceContract
     }
 }
-TeamExternalDataSourceRepo .up.> TeamExternalDataSourceContract #Red
+TeamExternalDataSourceRepo .up.> TeamExternalDataSourceContract #Red : implements
 
 }
 

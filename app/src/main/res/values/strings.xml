@@ -5,7 +5,9 @@
 
 
     <string name="btn_connexion">Se connecter</string>
-
+    <string name="text_connexion">Se connecter</string>
+    <string name="text_connexion_identifier">Code de connexion</string>
+    <string name="text_connexion_identifier_instructions">Veuillez saisir votre identifiant de connexion</string>
 
 
 </resources>

@@ -38,9 +38,9 @@ object Participe{
 object Equipe{
     <u>idEquipe</u> : int auto_increment
     nbJoueurs : int
-    nomUtilisateur String
+    'nomUtilisateur String
     nomEquipe : String
-    numEquipe : int
+    'numEquipe : int
     idClub* : int
 }
 

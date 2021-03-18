@@ -1,11 +1,18 @@
-package com.jeanloth.project.android.kotlin.data.externalData
+package com.jeanloth.project.android.kotlin.data.externalData.apis
 
+import com.jeanloth.project.android.kotlin.data.externalData.dto.TeamResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-private interface TeamService {
+interface TeamService {
+
+    @GET("connect/team")
+    fun connectTeam() : TeamResponse
+
+    @GET("connect/team")
+    fun connectTeam2(@Query("teamId") teamId: String) : TeamResponse
 
     @GET("/token")
     fun fetchFreshAccessToken() : Call<Unit>
@@ -16,7 +23,4 @@ private interface TeamService {
     @GET("/ws/2/release/{release}?inc=recordings&fmt=json")
     fun getRelease(@Path("release") releaseId: String): Call<Unit>
 
-    companion object {
-        const val API_URL = "https://musicbrainz.org/"
-    }
 }

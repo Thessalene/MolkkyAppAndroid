@@ -1,13 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.LoginFragment">
+    android:background="?attr/colorPrimary" >
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="190dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/logo_molkky" />
 
     <TextView
+        android:id="@+id/tv_connexion"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/amber_50"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        android:layout_marginTop="135dp"
+        android:text="@string/text_connexion_identifier_instructions" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/edt_identifier"
+        android:layout_width="180dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_below="@+id/tv_connexion"
+        android:hint="@string/text_connexion_identifier"
+        android:maxLines="1"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/tv_connexion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/amber_50"
+        />
+
+    <TextView
+        android:id="@+id/tv_error_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edt_identifier"
+        android:textAlignment="center"
+        android:textColor="@color/amber_50"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/edt_identifier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Message erreur ou de succès" />
+
+    <Button
+        android:id="@+id/btn_connexion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_connexion"
+        android:background="@color/white"
+        android:textColor="@color/deep_purple_800"
+        app:layout_constraintTop_toBottomOf="@+id/tv_error_msg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

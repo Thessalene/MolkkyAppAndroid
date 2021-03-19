@@ -10,11 +10,15 @@ java {
 }
 
 dependencies {
-    // Gson
-    implementation 'com.google.code.gson:gson:2.8.6'
 
-    // Retrofit
-    implementation "com.squareup.retrofit2:retrofit:2.9.0"
-    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+    // Gson
+    implementation "com.google.code.gson:gson:$gson_version"
+
+    // Networking
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    // Moshi
+    implementation("com.squareup.moshi:moshi-kotlin:1.11.0")
 
 }

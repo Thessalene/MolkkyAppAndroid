@@ -1,14 +1,22 @@
 package com.jeanloth.project.android.kotlin.molkkyappandroid.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.jeanloth.project.android.kotlin.molkkyappandroid.R
+import kotlinx.android.synthetic.main.login_fragment.*
+import org.koin.android.viewmodel.ext.android.viewModel
+import splitties.views.onClick
 
 class LoginFragment : Fragment() {
+
+    val loginVM : LoginViewModel by viewModel()
+
+    private val TAG = "Login Fragment"
 
     companion object {
         fun newInstance() = LoginFragment()
@@ -23,10 +31,23 @@ class LoginFragment : Fragment() {
         return inflater.inflate(R.layout.login_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        loginVM.getTeamLiveData.observe(viewLifecycleOwner, Observer {
+            if(it?.teamId != 0)  goToHomePage()
+            Log.d(TAG, "Team observed : $it")
+        })
+
+        btn_connexion.onClick{
+            Log.d(TAG, "btn_connexion clickd")
+            //loginVM.connectUser(edt_identifier.text.toString())
+            loginVM.testConnectUser()
+        }
+    }
+
+    private fun goToHomePage() {
+        Log.d(TAG, "Go to home page")
     }
 
 }

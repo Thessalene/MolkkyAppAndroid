@@ -1,16 +1,16 @@
 package com.jeanloth.project.android.kotlin.molkkyappandroid.di
 
-import com.jeanloth.project.android.kotlin.data.externalData.apis.TeamService
+import com.jeanloth.project.android.kotlin.data.externalData.contracts.TeamContract
 import com.jeanloth.project.android.kotlin.data.externalData.repositories.TeamRepository
-import org.koin.androidx.viewmodel.dsl.viewModel
+import com.jeanloth.project.android.kotlin.domain.usesCases.GetTeamUseCase
+import org.koin.dsl.bind
 import org.koin.dsl.module
-import retrofit2.Retrofit
 
-val dataModule = module {
-    factory { TeamRepository(get()) }
+val domainModule = module {
 
-    single { provideTeamService(get()) }
+    // Repository
+    single { TeamRepository(get()) } bind TeamContract::class
+
+    // Uses cases
+    single { GetTeamUseCase(get(), get()) }
 }
-
-// Services
-fun provideTeamService(retrofit: Retrofit): TeamService = retrofit.create(TeamService::class.java)

@@ -1,8 +1,10 @@
 package com.jeanloth.project.android.kotlin.molkkyappandroid.di
 
-import org.koin.androidx.viewmodel.dsl.viewModel
+import com.jeanloth.project.android.kotlin.domain.externalMappers.TeamMapper
 import org.koin.dsl.module
 
-val appModule = module {
-    //viewModel { LoginVM( get()) }
+val dataModule = module {
+
+    // Mappers
+    single { TeamMapper() }
 }

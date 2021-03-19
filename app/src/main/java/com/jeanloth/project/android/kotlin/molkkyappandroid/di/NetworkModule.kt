@@ -5,15 +5,17 @@ import com.jeanloth.project.android.kotlin.common.AuthorizationInterceptor
 import com.jeanloth.project.android.kotlin.common.MolkkyAppConfiguration
 import com.jeanloth.project.android.kotlin.data.externalData.apis.TeamService
 import com.jeanloth.project.android.kotlin.data.externalData.repositories.AuthorizationRepository
-import com.jeanloth.project.android.kotlin.domain.externalMappers.TeamMapper
+import com.jeanloth.project.android.kotlin.molkkyappandroid.fragments.LoginViewModel
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.viewmodel.dsl.viewModel
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 val networkModule = module {
+
     single { provideHttpLoggingInterceptor() }
     //single { provideMoshi() }
 
@@ -25,9 +27,6 @@ val networkModule = module {
 
     single { AuthorizationInterceptor( get())}
     single { AuthorizationRepository( get()) }
-
-    // Mappers
-    single { TeamMapper() }
 }
 
 fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
